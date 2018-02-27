@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+import fileinput
+from collections import Counter
+
+def maxprint(elem, maxcount):
+    return(int(elem/maxcount*80))
+
+def getmax(thecounter):
+    themax = 0
+    for elem in sorted(list(set(thecounter.elements()))):
+        if thecounter[elem] > themax:
+            themax = thecounter[elem]
+    return(themax)
+
+if __name__ == "__main__":
+    print("Histogram")
+    cnt = Counter()
+
+    for line in fileinput.input():
+        try:
+            line = line.rstrip()
+            cnt[line] +=1
+        except:
+            continue
+
+    themax = getmax(cnt)
+
+    for elem in sorted(list(set(cnt.elements()))):
+        print("{0:6}".format(elem), "-", "{0:6}".format(cnt[elem]),  "|", "*"*maxprint(cnt[elem], themax ),)
